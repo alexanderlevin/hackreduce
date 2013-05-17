@@ -12,8 +12,8 @@ lambda = [0.001, 0.01, 0.1, 1, 10, 100];
 
 for i = 1:10
     for t = 1:length(lambda);
-        scores(i, t) = cv_train(data_train, @(x) train_linear_frozen(x, lambda(t)), ...
-            @predict_linear_frozen, 10);
+        scores(i, t) = cv_train(data_train, @(x) train_linear(x, lambda(t)), ...
+            @predict_linear, 10);
     end
 end
 
