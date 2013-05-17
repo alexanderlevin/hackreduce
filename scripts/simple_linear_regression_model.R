@@ -48,3 +48,19 @@ lasso.fit = lars(training.matrix[,c(11, 12, 13, 27, 28, 29)],
 
 #ridge.predictions = predict(ridge.fit, challenge.matrix[,-26], 
 #		  type="response", s=10)
+
+
+
+library(randomForest)
+rf.fit = randomForest(training.matrix[,c(11, 12, 13, 27, 28, 29)],
+       training.matrix[, 26])
+rf.predictions = predict(rf.fit, 
+	       challenge.matrix[, c(11, 12, 13, 27, 28, 29)])
+rf.predictions = exp(rf.predictions) - 1
+
+# In the contest we used fewer features in our random forest
+# The code below reproduces the model we used
+rf.fit1 = randomForest(
+	training.matrix[, c("X13", "stores26", "stores13", "Z")], 
+	training.matrix[,"X26"])
+
