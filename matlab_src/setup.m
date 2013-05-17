@@ -5,29 +5,30 @@ train = importdata('../data/training.csv');
 
 %% Training
 
-[data_train, ~, cat, ~, cat_mean, Icat] = raw_to_cell(train);
+[data_train, ~, cat] = raw_to_cell(train);
 
 scores = [];
 lambda = [0.001, 0.01, 0.1, 1, 10, 100];
 
-for i = 1:1
+for i = 1:10
     for t = 1:length(lambda);
-        scores(i, t) = cv_train(data_train, @(x) train_linear(x, lambda(t)), @predict_linear, 10);
+        scores(i, t) = cv_train(data_train, @(x) train_linear_frozen(x, lambda(t)), ...
+            @predict_linear_frozen, 10);
     end
 end
 
+boxplot(scores);
 
 %% Train on full data set and write predictions
 
-[data_train] = raw_to_cell(train);
-b = train_linear(data_train, 10);
+lambda = 10;
 
+% Load test data
 [data_test, uniq_prod] = raw_to_cell(test);
 
-[x_test, y_test] = extract_features(data_test);
-y_hat = exp([ones(size(x_test, 1), 1) log(x_test+1)]*b) - 1;
+% Train on full training set
+fit = train_linear(data_train, lambda);
 
+% Predict on training set
+y_hat = predict_linear(fit, data_test);
 write_predictions(y_hat, uniq_prod);
-
-
-

@@ -1,24 +1,23 @@
-function [ y_hat, y_test ] = predict_linear( fit, data_test )
+function [ y_hat, y_test ] = predict_linear_frozen( fit, data_test )
 
 % test data set
 [x_test, y_test] = extract_features(data_test);
 
-bias = zeros(length(y_test), 1);
-%for i = 1:length(data_test)
-%    bias(i) = data_test{i}.cat_mean;
-%end
+n = length(data_test);
+frozen = logical(zeros(n, 1));
+frozen_foods = {'Frzn Meatless', ...
+    'Frozen Handhelds & Snacks', ...
+    'Frzn Ss Premium Meals', ...
+    'Frozen Snacks And Handhelds', ...
+    'Frozen Pizza'};
 
-cats = zeros(length(data_test), 1);
-for i = 1:length(data_test)
-    cats(i) = data_test{i}.cat_i;
+for i = 1:n
+    frozen(i) = nnz(strcmp(data_test{i}.cat, frozen_foods)) > 0;
 end
 
-frozen = cats == 97 | cats == 88 | cats == 102 | cats == 94 | cats == 92;
-
-y_hat(find(frozen)) = exp([ones(size(x_test(frozen, :), 1), 1) log(x_test(frozen, :)+1)]*fit.b_frozen) - 1;
-y_hat(find(~frozen)) = exp([ones(size(x_test(~frozen, :), 1), 1) log(x_test(~frozen, :)+1)]*fit.b) - 1;
-
-%y_hat = exp([ones(size(x_test, 1), 1) log(x_test+1)]*b + bias) - 1;
+y_hat = zeros(n, 1);
+y_hat(frozen) = exp([ones(size(x_test(frozen, :), 1), 1) x_test(frozen, :)]*fit.b_frozen) - 1;
+y_hat(~frozen) = exp([ones(size(x_test(~frozen, :), 1), 1) x_test(~frozen, :)]*fit.b) - 1;
 
 end
 
