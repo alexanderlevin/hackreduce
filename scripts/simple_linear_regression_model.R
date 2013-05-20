@@ -11,14 +11,14 @@ logX26 = log(challenge.data$X26 + 1)
 Z = challenge.data$X13 * (challenge.data$stores26 / challenge.data$stores13)
 challenge.data = data.frame(challenge.data, Z, logX26)
 
+
+# Some linear fits we can try
+
+# simplest model
 lm.fit = lm(logX26 ~ log(X13 + 1)  + log(X12 + 1)  + log(X11+1) + log(Z+1), 
       data = training.data)
-lm.predictions = predict(lm.fit)
 
-# test error
-sqrt(mean((lm.predictions - training.data$logX26)^2))
-
-
+# adding interaction terms
 lm.fit.interactions = lm(logX26 ~ 
 		      log(X13 + 1) * log(Z + 1) * log(stores26 + 1)
 		      , data=training.data)	
