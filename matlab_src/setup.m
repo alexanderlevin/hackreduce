@@ -1,5 +1,11 @@
 %% Import raw data
 
+% The training and test data are in the same format
+% as the data provided by the challenge, except for one change.
+% We swap the first two columns, so that in the files below, 
+% the product category is the first column, and the
+% product launch id is the second.
+
 test = importdata('../data/test.csv');
 train = importdata('../data/training.csv');
 
