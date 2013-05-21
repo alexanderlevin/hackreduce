@@ -13,7 +13,7 @@ for i = 1:n
     
     % 13 features: sales(week_i) / stores( week_i ) * stores( week_26 ) for
     % weeks i=1 to i=13
-    x_row = [p.X(1:13, 4)./p.X(1:13, 3)*p.X(26, 3); p.X(1:13, 4)];
+    x_row = [p.X(1:13, 4)./p.X(1:13, 3)*p.X(26, 3) ];
     
     % 13 features: raw sales values between weeks 1 and 13
     x_row = [ x_row; p.X(1:13,4) ];
