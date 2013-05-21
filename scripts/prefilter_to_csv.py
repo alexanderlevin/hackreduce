@@ -1,6 +1,6 @@
-RAW_DIR = '../rawdata/'
-TRAIN_SET = 'dunnhumby hack reduce product launch challenge - training set.csv'
-QUESTION_SET = 'dunnhumby hack reduce product launch challenge - question set.csv'
+RAW_DIR = '../data/'
+TRAIN_SET = 'training.csv'
+QUESTION_SET = 'test.csv'
 TRAIN_PATH = RAW_DIR + TRAIN_SET
 
 QUESTION_PATH = RAW_DIR + QUESTION_SET
@@ -11,7 +11,7 @@ import pdb
 
 def load_train():
     f = open( ACTIVE_DATASET, 'r' )
-    x = f.read().split('\r\n')
+    x = f.read().split('\r')
     return x
 
 def get_feature_list( x ):
@@ -19,6 +19,9 @@ def get_feature_list( x ):
     feature_list = header.split(',')
     return feature_list
 
+"""
+Script for creating a CSV amenable to manipulation in R
+"""
 if __name__ == '__main__':
     x = load_train()
     feature_list = get_feature_list( x )
