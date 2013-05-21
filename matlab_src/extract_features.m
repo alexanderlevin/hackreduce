@@ -21,19 +21,24 @@ for i = 1:n
     % 13 features: number of stores between weeks 14 and 26    
     % add stores between weeks 14 and 26
     x_row = [ x_row; p.X(14:26,3) ];
+  
+    % Take log transform of the features
+    x_row = log(x_row + 1);
     
-    % add some interaction terms
-    % 3 features: interaction terms
-    finalstores_midsales = exp( log(p.X(26,3) + 1 ) * log(p.X(13,4) + 1) );
-    midz_midsales = exp( ( log( p.X(13,4) / p.X(13,3) * p.X( 26,3) + 1 )  ) * ( log(p.X(13,4) + 1 )  ) );
-    finalscores_midz  = exp( ( log( p.X(13,4) / p.X(13,3) * p.X(26,3) +1) ) * log(p.X(26,3)+1) );
-    x_row = [ x_row; finalstores_midsales; midz_midsales; finalscores_midz ];
+    % add some interaction terms between log-transformed features
+    % 3 features: interaction terms 
+    finalstores_midsales = log(p.X(26,3) + 1 ) * log(p.X(13,4) + 1);
+    midz_midsales = log(p.X(13,4) / p.X(13,3) * p.X(26,3) + 1) *...
+        log(p.X(13,4) + 1 );
+    finalscores_midz  = log(p.X(13,4) / p.X(13,3) * p.X(26,3) + 1) *...
+        log(p.X(26,3)+1);
+    
+    x_row = [x_row; finalstores_midsales; midz_midsales; finalscores_midz];
     
     x = [x; x_row'];
     
     y(i) = p.y;
 end
-
 
 end
 
