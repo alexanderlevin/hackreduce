@@ -16,7 +16,9 @@ train = importdata('../data/training.csv');
 scores = [];
 lambda = [0.001, 0.01, 0.1, 1, 10, 100];
 
+% 10-fold cross-validation
 for i = 1:10
+    % sweep through regularization parameters
     for t = 1:length(lambda);
         scores(i, t) = cv_train(data_train, @(x) train_linear(x, lambda(t)), ...
             @predict_linear, 10);
@@ -37,4 +39,6 @@ fit = train_linear(data_train, lambda);
 
 % Predict on training set
 y_hat = predict_linear(fit, data_test);
+
+% write the predictions to  predictions.csv for uploading to Kaggle
 write_predictions(y_hat, uniq_prod);
