@@ -1,6 +1,9 @@
 hackreduce
 ==========
-Our solution to the dunnhumby hack/reduce product launch challenge
+Our solution to the dunnhumby hack/reduce product launch challenge.
+
+Slides from our presentation at the Boston Data Mining Meetup (6/4) 
+https://docs.google.com/presentation/d/1Md7Xi09_LxnpPPjM0tNCtcq6aU4--9xTglBMk_Vb6po/pub?start=false&loop=false&delayms=3000
 
 Overview
 =========
