@@ -18,9 +18,8 @@ for i = 1:n
     % 13 features: raw sales values between weeks 1 and 13
     x_row = [ x_row; p.X(1:13,4) ];
     
-    % 13 features: number of stores between weeks 14 and 26    
-    % add stores between weeks 14 and 26
-    x_row = [ x_row; p.X(14:26,3) ];
+    % 26 features: number of stores between weeks 1 and 26    
+    x_row = [ x_row; p.X(1:26,3) ];
   
     % Take log transform of the features
     x_row = log(x_row + 1);
